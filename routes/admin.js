@@ -1,8 +1,10 @@
-const express = require('express')
+const express = require('express');
+const { users, newCourse, addContent } = require('../controller/adminController');
 const router = express.Router()
 
-router.get('/', (req, res)=> {
-    res.send('Admin route')
-})
+/* GET admin api(s). */
+router.get('/users', users)
+router.post('/new-course', newCourse)
+router.post('/add-course-content', addContent)
 
 module.exports = router;
