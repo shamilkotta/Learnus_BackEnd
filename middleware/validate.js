@@ -7,8 +7,7 @@ const result = (req, res, next)=> {
     if (err.length > 0) {
         next(new ErrorResponse(400, err[0].msg))
     }else {
-        const validData = matchedData(req, {onlyValidData: true, includeOptionals: false})
-        req.body= validData
+        req.validData = matchedData(req, {onlyValidData: true, includeOptionals: false})
         next()
     }
 }

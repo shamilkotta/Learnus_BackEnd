@@ -1,30 +1,39 @@
 const ErrorResponse = require("../utils/ErrorResponse")
 const bcrypt = require('bcrypt')
 const { doSignup, doLogin } = require("../helpers/indexHelper")
+const jwt = require('jsonwebtoken')
 
 module.exports = {
     signupController: async (req, res, next)=> {
-        let { name, email, password } = req.body
-        const salt = parseInt(process.env.SALT) || 10
+        let { name, email, password } = req.validData
+        const salt = parseInt(process.env.HASH_SALT) || 10
+
         password = await bcrypt.hash(password, salt)
-        doSignup({name, email, password}).then((data)=>{
-            res.status(200).json({success: true, message: 'submited'})
+        doSignup({name, email, password}).then(async (data)=> {
+            const token = await jwt.sign({email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '45s'})
+            res.status(200).cookie("x-auth-token", token, {httpOnly: true}).json({success: true, message: 'Successfuly registered'})
         }).catch(next)
     },
 
     loginController: (req, res, next)=> {
-        const { email, password } = req.body
-        doLogin({email, password}).then((data)=>{
+        const { email, password } = req.validData
+
+        doLogin({email, password}).then(async (data)=>{
             if (data) {
-                res.status(200).json({success: true, message: 'authorized'})
+                const token = await jwt.sign({email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '45s'})
+                res.status(200).cookie("x-auth-token", token, {httpOnly: true}).json({success: true, message: 'Successfuly logined'})
             }else {
                 next(new ErrorResponse(400, 'Invalid Password'))
             }
         }).catch(next)
     },
 
-    coursesController: (req, res, next)=> {
+    logoutController: (req, res, next)=> {
+        res.clearCookie('x-auth-token')
+        res.status(200).json({success: true, message: 'Successfuly logouted'})
+    },
 
+    coursesController: (req, res, next)=> {
         res.status(200).json({success: true, message: 'get courses'})
     },
 
@@ -33,6 +42,7 @@ module.exports = {
     },
 
     cartController: (req, res, next)=> {
-        res.status(200).json({success: true, message: 'get courses'})   
+        console.log(req.user)
+        res.status(200).json({success: true, message: req.user})   
     }
 }
