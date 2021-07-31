@@ -1,7 +1,8 @@
-const { validationResult, matchedData } = require("express-validator")
+const { validationResult, matchedData, checkSchema } = require("express-validator")
+const { signupSchema, loginSchema } = require("../schema/indexSchema")
 const ErrorResponse = require("../utils/ErrorResponse")
 
-module.exports = function validate(req, res, next) {
+const result = (req, res, next)=> {
     const err = validationResult(req).array()
     if (err.length > 0) {
         next(new ErrorResponse(400, err[0].msg))
@@ -11,3 +12,16 @@ module.exports = function validate(req, res, next) {
         next()
     }
 }
+
+module.exports = {
+    signupValidation: [
+        checkSchema(signupSchema),
+        result
+    ],
+
+    loginValidation: [
+        checkSchema(loginSchema),
+        result
+    ]
+}
+
