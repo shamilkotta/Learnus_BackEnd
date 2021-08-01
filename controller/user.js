@@ -1,6 +1,6 @@
 module.exports = {
     profile: (req, res, next)=>{
-        res.status(200)
+        res.status(200).json({message: 'success', data: req.user})
     },
 
     cart: (req, res, next)=>{

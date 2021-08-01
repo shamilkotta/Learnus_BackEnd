@@ -13,6 +13,7 @@ const userRouter = require('./routes/user');
 
 const errorHandler = require('./middleware/errorHandler');
 const ErrorResponse = require('./utils/ErrorResponse');
+const { authorize, authorizeAdmin } = require('./middleware/authorize');
 
 const app = express();
 
@@ -27,9 +28,9 @@ db.connect((err)=> {
   console.log('Database Connected')
 })
 
-app.use('/', indexRouter);
-app.use('/admin', adminRouter);
-app.use('/user', userRouter);
+app.use('/api/', indexRouter);
+app.use('/api/user', authorize, userRouter);
+app.use('/api/admin', authorizeAdmin, adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

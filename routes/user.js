@@ -1,5 +1,5 @@
 var express = require('express');
-const { profile, cart, myCourses } = require('../controller/userController');
+const { profile, cart, myCourses } = require('../controller/user');
 var router = express.Router();
 
 /* GET users api(s). */

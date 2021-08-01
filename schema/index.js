@@ -2,16 +2,20 @@ const ErrorResponse = require('../utils/ErrorResponse')
 
 module.exports = {
     signupSchema: {
-        name: {
+        username: {
+            trim: true,
             notEmpty: {
                 options: { ignore_whitespace: true }
             },
+            isAlphanumeric: {
+                errorMessage: 'User name cannot contain special characters or whitespaces'
+            },
             isString: true,
             isLength: {
-                errorMessage: 'Name must contain at least 3 characters',
+                errorMessage: 'User name must contain at least 3 characters',
                 options: { min: 3 }
             },
-            errorMessage: 'Name cannot be empty'
+            errorMessage: 'User name cannot be empty',
         },
         email: {
             notEmpty: true,
@@ -56,12 +60,19 @@ module.exports = {
     },
 
     loginSchema: {
-        email: {
-            notEmpty: true,
-            isEmail: true,
-            trim: true,
-            normalizeEmail: true,
-            errorMessage: 'Enter a valid email'
+        username: {
+            notEmpty: {
+                options: { ignore_whitespace: true }
+            },
+            isAlphanumeric: {
+                errorMessage: 'User name cannot contain special characters or whitespaces'
+            },
+            isString: true,
+            isLength: {
+                errorMessage: 'User name must contain at least 3 characters',
+                options: { min: 3 }
+            },
+            errorMessage: 'User name cannot be empty',
         },
         password: {
             notEmpty: true,

@@ -3,7 +3,7 @@ const ErrorResponse = require('../utils/ErrorResponse')
 const check = buildCheckFunction(['headers', 'cookies'])
 const jwt = require('jsonwebtoken')
 
-module.exports.authorize = [
+const  authorize = [
     check('x-auth-token').isJWT(),
     (req, res, next)=> {
         const err = validationResult(req).array()
@@ -16,7 +16,7 @@ module.exports.authorize = [
 
     (req, res, next)=> {
         try {
-            const token = req.cookies['x-auth-token']
+            const token = req.headers['x-auth-token'] || req.cookies['x-auth-token']
             req.user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
             next()
         } catch (error) {
@@ -25,3 +25,19 @@ module.exports.authorize = [
         }
     }
 ]
+
+const authorizeAdmin = [
+    ...authorize,
+    (req, res, next)=> {
+        if (!req.user.isUser) {
+            next()
+        }else {
+            next(new ErrorResponse(401))
+        }
+    }
+]
+
+module.exports = {
+    authorize,
+    authorizeAdmin
+}
