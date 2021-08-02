@@ -13,9 +13,8 @@ const router = express.Router();
 
 router.post('/signup', signupValidation, signupController)
 router.post('/login', loginValidation, loginController)
-router.get('/logout', logoutController)
 
-router.get('/courses', coursesController)
 router.get('/course/:id', courseController)
+router.get('/courses', coursesController)
 
 module.exports = router;

@@ -1,11 +1,17 @@
 const express = require('express');
-const { users, newCourse, addContent } = require('../controller/admin');
+const {
+    usersController,
+    userController,
+    newCourseController,
+    addContentController
+} = require('../controller/admin');
 const { newCourseValidation } = require('../middleware/validate');
 const router = express.Router()
 
 /* GET admin api(s). */
-router.get('/users', users)
-router.post('/new-course',newCourseValidation, newCourse)
-router.post('/add-course-content', addContent)
+router.get('/users', usersController)
+router.get('/user/:id', userController)
+router.post('/new-course',newCourseValidation, newCourseController)
+router.post('/add-course-content', addContentController)
 
 module.exports = router;

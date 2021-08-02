@@ -54,11 +54,14 @@ module.exports = {
     getCourse: (id)=> {
         return new Promise (async (resolve, reject)=> {
             const course = await db().collection(COURSE_COLLECTION).findOne({course__code: id})
-            if (course) {
-                resolve(course)
-            }else {
-                reject({statusCode: 404})
-            }
+            course ? resolve(course) : reject(404)
+        })
+    },
+
+    getAllCourses: ()=> {
+        return new Promise (async (resolve, reject)=> {
+            const courses = await db().collection(COURSE_COLLECTION).find().project({_id: 0, course__code: 1, course__title: 1, course__price: 1, course__duration: 1}).toArray()
+            courses ? resolve(courses) : reject(404)
         })
     }
 }

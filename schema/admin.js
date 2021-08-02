@@ -88,8 +88,23 @@ module.exports = {
             },
             errorMessage: 'Course target cannot be empty',
         },
-        // course__price: "shamil",
-        // course__duration: "shamil",
+        course__price: {
+            trim: true,
+            notEmpty: {
+                options: { ignore_whitespace: true }
+            },
+            isAlphanumeric: {
+                errorMessage: 'Course price can only be numeric values'
+            },
+            errorMessage: 'Course price cannot be empty',
+        },
+        course__duration: {
+            trim: true,
+            notEmpty: {
+                options: { ignore_whitespace: true }
+            },
+            errorMessage: 'Course duration cannot be empty',
+        },
         course__language: {
             trim: true,
             isString: true,
