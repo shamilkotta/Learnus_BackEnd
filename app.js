@@ -14,9 +14,11 @@ const userRouter = require('./routes/user');
 const errorHandler = require('./middleware/errorHandler');
 const ErrorResponse = require('./utils/ErrorResponse');
 const { authorize, authorizeAdmin } = require('./middleware/authorize');
+const cors = require('./middleware/cors');
 
 const app = express();
 
+app.use(cors)
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -1,10 +1,16 @@
 const { validationResult, buildCheckFunction } = require('express-validator')
 const ErrorResponse = require('../utils/ErrorResponse')
-const check = buildCheckFunction(['headers', 'cookies'])
+const check = buildCheckFunction(['headers'])
 const jwt = require('jsonwebtoken')
 
 const  authorize = [
-    check('x-auth-token').isJWT(),
+    (req, res, next)=> {
+        if (req.headers.authorization) {   
+            req.headers.authorization = req.headers.authorization.replace('Bearer ', '')
+        }
+        next()
+    },
+    check('authorization').isJWT(),
     (req, res, next)=> {
         const err = validationResult(req).array()
         if (err.length > 0) {
@@ -16,7 +22,7 @@ const  authorize = [
 
     (req, res, next)=> {
         try {
-            const token = req.headers['x-auth-token'] || req.cookies['x-auth-token']
+            const token = req.headers.authorization
             req.user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
             next()
         } catch (error) {

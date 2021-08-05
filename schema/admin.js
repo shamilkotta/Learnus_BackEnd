@@ -4,6 +4,9 @@ module.exports = {
         course__code: {
             trim: true,
             isString: true,
+            isUppercase: {
+                errorMessage: 'Course code must be upper case letters'
+            },
             notEmpty: {
                 options: { ignore_whitespace: true }
             },
@@ -178,4 +181,4 @@ module.exports = {
         },
         // course__coverImg: "shamil",
     }
-}
+} 
