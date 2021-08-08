@@ -1,6 +1,6 @@
 const ErrorResponse = require("../utils/ErrorResponse")
 const ObjectId = require('mongodb').ObjectId
-const { postNewCourse, postSaveCourse, getAllUsers, getUser, getAllCourses, getCourseById } = require("../helpers/admin")
+const { putCourse, saveCourse, getAllUsers, getUser, getAllCourses } = require("../helpers/admin")
 
 module.exports = {
     usersController: (req, res, next)=>{
@@ -22,12 +22,8 @@ module.exports = {
         }).catch(next)
     },
 
-    courseController: (req, res, next)=> {
-
-    },
-
     saveCourseController: (req, res, next)=> {
-        req.body.status = 'draft'
+        req.body.status = 'Draft'
         const match = {}
         if (req.body.id) {
             match._id= ObjectId(req.body.id)
@@ -35,34 +31,21 @@ module.exports = {
             match.course__code= '164$8026092a7ff9119e3'
         }
         delete req.body['id']
-        postSaveCourse(req.body, match).then(response=> {
-            res.status(200).json({success: true, message: 'successfully saved', id: response.upsertedId})
+        saveCourse(req.body, match).then(response=> {
+            res.status(200).json({success: true, message: 'successfully saved to draft', id: response.upsertedId})
         }).catch(next)
     },
 
-    newCourseController: (req, res, next)=> {
+    putCourseController: (req, res, next)=> {
         let courseData = { ...req.validData }
-        courseData.status = 'pause'
+        courseData.status = 'Paused'
         const id = ObjectId(req.body.id)
         if (req.body.course__content.length == 0) {
             return next(new ErrorResponse(400, 'Course content cannot be empty'))
         }
         courseData.course__content = req.body.course__content
-        postNewCourse(courseData, id).then((response)=> {
-            res.status(200).json({success: true, message: 'New Course added'})
+        putCourse(courseData, id).then((response)=> {
+            res.status(200).json({success: true, message: 'Course Updated'})
         }).catch(next)
     },
-
-    addContentController: (req, res, next)=> {
-        res.status(200)
-    },
-
-    getEditCourseController: (req, res, next)=> {
-        const id = ObjectId(req.params.id)
-        getCourseById(id).then((course)=> {
-            res.status(200).json({success: true, message: `user found`, course})
-        }).catch(next)
-    },
-
-    postEditCourseController: (req, res, next)=> {},
 }

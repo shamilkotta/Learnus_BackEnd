@@ -2,7 +2,6 @@ const express = require('express');
 const {
     loginController,
     signupController,
-    logoutController,
     coursesController,
     courseController,
 } = require('../controller');
@@ -14,7 +13,7 @@ const router = express.Router();
 router.post('/signup', signupValidation, signupController)
 router.post('/login', loginValidation, loginController)
 
-router.get('/course/:id', courseController)
 router.get('/courses', coursesController)
+router.get('/course/:id', courseController)
 
 module.exports = router;

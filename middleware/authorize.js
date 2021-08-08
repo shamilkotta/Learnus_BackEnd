@@ -26,7 +26,6 @@ const  authorize = [
             req.user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
             next()
         } catch (error) {
-            res.clearCookie('x-auth-token')
             next(new ErrorResponse(401))
         }
     }
@@ -35,7 +34,7 @@ const  authorize = [
 const authorizeAdmin = [
     ...authorize,
     (req, res, next)=> {
-        if (!req.user.isUser) {
+        if (req.user.isAdmin) {
             next()
         }else {
             next(new ErrorResponse(401))

@@ -9,7 +9,7 @@ module.exports = {
             const salt = parseInt(process.env.HASH_SALT) || 10
             password = await bcrypt.hash(password, salt)
             doSignup({username, email, password}).then(({data, token})=> {
-                res.status(201).json({success: true, message: 'Successfully registered', 'x-auth-token': token})
+                res.status(201).json({success: true, message: 'Successfully registered', token})
             }).catch(next)
         } catch (err) {
             next(err)
@@ -18,20 +18,15 @@ module.exports = {
     },
 
     loginController: (req, res, next)=> {
-        try {
-            const { username, password } = req.validData
-            doLogin({username, password}).then(({data, token})=>{
-                if (data) {
-                    res.status(200).json({success: true, message: 'successfully logged in', 'x-auth-token': token})
-                    // res.status(200).cookie("x-auth-token", token, {httpOnly: true}).json({success: true, message: 'Successfuly logined'})
-                }else {
-                    next(new ErrorResponse(400, 'Invalid Password'))
-                }
-            }).catch(next)
-        } catch (err) {
-            next(err)
-        }
-        
+        const { username, password } = req.validData
+        doLogin({username, password}).then(({data, token})=>{
+            if (data) {
+                res.status(200).json({success: true, message: 'successfully logged in', token})
+                // res.status(200).cookie("x-auth-token", token, {httpOnly: true}).json({success: true, message: 'Successfuly logined'})
+            }else {
+                next(new ErrorResponse(400, 'Invalid Password'))
+            }
+        }).catch(next)
     },
 
     coursesController: (req, res, next)=> {
@@ -41,9 +36,15 @@ module.exports = {
     },
 
     courseController: (req, res, next)=> {
-        const course__code = req.params.id
-        getCourse(course__code).then((course)=> {
-            res.status(200).json({success: true, message: `${course__code} found`, course,})
+        const id = req.params.id
+        const match = {}
+        if (id.length <= 5) {
+            match.course__code = id
+        }else {
+            match._id
+        }
+        getCourse(match).then((course)=> {
+            res.status(200).json({success: true, message: `${id} found`, course,})
         }).catch(next)
     }
 }
