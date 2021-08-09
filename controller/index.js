@@ -1,6 +1,7 @@
 const ErrorResponse = require("../utils/ErrorResponse")
 const bcrypt = require('bcrypt')
 const { doSignup, doLogin, getCourse, getAllCourses } = require("../helpers")
+const ObjectId = require('mongodb').ObjectId
 
 module.exports = {
     signupController: async (req, res, next)=> {
@@ -41,7 +42,7 @@ module.exports = {
         if (id.length <= 5) {
             match.course__code = id
         }else {
-            match._id
+            match._id = ObjectId(id)
         }
         getCourse(match).then((course)=> {
             res.status(200).json({success: true, message: `${id} found`, course,})

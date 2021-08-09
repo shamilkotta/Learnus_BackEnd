@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 
 const getToken = (username)=> {
     const payload = { username, isAdmin: false }
-    const expiresIn= '120s'
+    const expiresIn= '3600s'
     if (username == process.env.ADMIN_NAME) {
         payload.isAdmin = true
         const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn})
@@ -62,7 +62,7 @@ module.exports = {
     getCourse: (match)=> {
         return new Promise (async (resolve, reject)=> {
             try {  
-                const course = await db().collection(COURSE_COLLECTION).findOne(match)
+                const course = await db().collection(COURSE_COLLECTION).findOne(match, {projection: {_id: 0, status: 0}})
                 course ? resolve(course) : reject({statusCode: 404}) 
             } catch (err) {
                 reject(err)
