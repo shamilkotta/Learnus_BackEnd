@@ -14,8 +14,8 @@ module.exports = {
                 errorMessage: 'Course Code cannot contain special characters or whitespaces'
             },
             isLength: {
-                errorMessage: 'Course Code must contain at least 5 characters',
-                options: { min: 5 }
+                errorMessage: 'Course Code must be 5 characters',
+                options: [{ min: 5 }, {max: 5}]
             },
             errorMessage: 'Course Code cannot be empty',
         },
@@ -26,8 +26,8 @@ module.exports = {
                 options: { ignore_whitespace: true }
             },
             isLength: {
-                errorMessage: 'Course title must be 10 to 25 characters long',
-                options: [{min: 10}, {max: 25}]
+                errorMessage: 'Course title must be 75 to 110 characters long',
+                options: [{min: 75}, {max: 110}]
             },
             errorMessage: 'Course title cannot be empty',
         },
@@ -38,8 +38,8 @@ module.exports = {
                 options: { ignore_whitespace: true }
             },
             isLength: {
-                errorMessage: 'Course short description must be 10 to 25 characters long',
-                options: [{min: 10}, {max: 25}]
+                errorMessage: 'Course short description must be 110 to 200 characters long',
+                options: [{min: 110}, {max: 200}]
             },
             errorMessage: 'Course short description cannot be empty',
         },
@@ -50,8 +50,8 @@ module.exports = {
                 options: { ignore_whitespace: true }
             },
             isLength: {
-                errorMessage: 'Course description must be 10 to 25 characters long',
-                options: [{min: 10}, {max: 25}]
+                errorMessage: 'Course description must be 650 to 1000 characters long',
+                options: [{min: 650}, {max: 1000}]
             },
             errorMessage: 'Course description cannot be empty',
         },
@@ -62,8 +62,8 @@ module.exports = {
                 options: { ignore_whitespace: true }
             },
             isLength: {
-                errorMessage: 'Course benefits must be 10 to 25 characters long',
-                options: [{min: 10}, {max: 25}]
+                errorMessage: 'Course benefits must be 10 to 900 characters long',
+                options: [{min: 10}, {max: 900}]
             },
             errorMessage: 'Course benefits cannot be empty',
         },
@@ -74,8 +74,8 @@ module.exports = {
                 options: { ignore_whitespace: true }
             },
             isLength: {
-                errorMessage: 'Course requirements must be 10 to 25 characters long',
-                options: [{min: 10}, {max: 25}]
+                errorMessage: 'Course requirements must be 10 to 750 characters long',
+                options: [{min: 10}, {max: 750}]
             },
             errorMessage: 'Course requirements cannot be empty',
         },
@@ -86,8 +86,8 @@ module.exports = {
                 options: { ignore_whitespace: true }
             },
             isLength: {
-                errorMessage: 'Course target must be 10 to 25 characters long',
-                options: [{min: 10}, {max: 25}]
+                errorMessage: 'Course target must be 10 to 750 characters long',
+                options: [{min: 10}, {max: 750}]
             },
             errorMessage: 'Course target cannot be empty',
         },
@@ -114,6 +114,10 @@ module.exports = {
             notEmpty: {
                 options: { ignore_whitespace: true }
             },
+            isLength: {
+                errorMessage: 'Course language can only upto 28 characters long',
+                options: {max: 25}
+            },
             errorMessage: 'Course language cannot be empty',
         },
         course__resources: {
@@ -123,8 +127,8 @@ module.exports = {
                 options: { ignore_whitespace: true }
             },
             isLength: {
-                errorMessage: 'Course resources must be 10 to 25 characters long',
-                options: [{min: 10}, {max: 25}]
+                errorMessage: 'Course resources can only upto  28 characters long',
+                options: {max: 28}
             },
             errorMessage: 'Course resources cannot be empty',
         },
@@ -135,8 +139,8 @@ module.exports = {
                 options: { ignore_whitespace: true }
             },
             isLength: {
-                errorMessage: 'Course benefits must be 10 to 25 characters long',
-                options: [{min: 10}, {max: 25}]
+                errorMessage: 'Course benefits can only upto 28 characters long',
+                options: {max: 28}
             },
             errorMessage: 'Course benefits cannot be empty',
         },
@@ -148,8 +152,8 @@ module.exports = {
                 options: { ignore_whitespace: true }
             },
             isLength: {
-                errorMessage: 'Course benefits must be 10 to 25 characters long',
-                options: [{min: 10}, {max: 25}]
+                errorMessage: 'Course benefits can only upto 28 characters long',
+                options: {max: 28}
             },
             errorMessage: 'Course benefits cannot be empty',
         },
@@ -161,8 +165,8 @@ module.exports = {
                 options: { ignore_whitespace: true }
             },
             isLength: {
-                errorMessage: 'Course benefits must be 10 to 25 characters long',
-                options: [{min: 10}, {max: 25}]
+                errorMessage: 'Course benefits can only upto 28 characters long',
+                options: {max: 28}
             },
             errorMessage: 'Course benefits cannot be empty',
         },
@@ -174,8 +178,8 @@ module.exports = {
                 options: { ignore_whitespace: true }
             },
             isLength: {
-                errorMessage: 'Course benefits must be 10 to 25 characters long',
-                options: [{min: 10}, {max: 25}]
+                errorMessage: 'Course benefits can only upto 28 characters long',
+                options: {max: 28}
             },
             errorMessage: 'Course benefits cannot be empty',
         },

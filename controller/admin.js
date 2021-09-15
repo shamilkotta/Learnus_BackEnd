@@ -1,11 +1,12 @@
 const ErrorResponse = require("../utils/ErrorResponse")
 const ObjectId = require('mongodb').ObjectId
-const { putCourse, saveCourse, getAllUsers, getUser, getAllCourses } = require("../helpers/admin")
+const { putCourse, saveCourse, getAllUsers, getUser, getAllCourses, deleteCourse } = require("../helpers/admin")
 
 module.exports = {
     usersController: (req, res, next)=>{
         getAllUsers().then((users)=> {
             res.status(200).json({success: true, message: `${users.length} users found`, users})
+            
         }).catch(next)
     },
 
@@ -38,7 +39,7 @@ module.exports = {
 
     putCourseController: (req, res, next)=> {
         let courseData = { ...req.validData }
-        courseData.status = 'Paused'
+        courseData.status = 'Active'
         const id = ObjectId(req.body.id)
         if (req.body.course__content.length == 0) {
             return next(new ErrorResponse(400, 'Course content cannot be empty'))
@@ -48,4 +49,12 @@ module.exports = {
             res.status(200).json({success: true, message: 'Course Updated'})
         }).catch(next)
     },
+
+    deleteCourseController: (req, res, next)=> {
+        id = req.params.id
+        deleteCourse(id).then((response)=> {
+            console.log(response);
+            res.status(200).json({success: true, message: `${id} Deleted Successfully`})
+        }).catch(next)
+    }
 }

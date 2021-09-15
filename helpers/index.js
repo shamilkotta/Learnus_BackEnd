@@ -73,7 +73,7 @@ module.exports = {
     getAllCourses: ()=> {
         return new Promise (async (resolve, reject)=> {
             try {
-                const courses = await db().collection(COURSE_COLLECTION).find({status: 'Active'},{projection: {_id: 0, course__code: 1, course__title: 1, course__price: 1, course__duration: 1, status: 0}}).toArray()
+                const courses = await db().collection(COURSE_COLLECTION).find({status: 'Active'},{projection: {_id: 0, course__code: 1, course__title: 1, course__price: 1, course__duration: 1}}).toArray()
                 courses ? resolve(courses) : reject({statusCode: 404})
             } catch (err) {
                 reject(err)

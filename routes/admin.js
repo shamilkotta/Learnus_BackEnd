@@ -5,6 +5,7 @@ const {
     putCourseController,
     saveCourseController,
     coursesController,
+    deleteCourseController,
 } = require('../controller/admin');
 const { newCourseValidation } = require('../middleware/validate');
 const router = express.Router()
@@ -18,7 +19,7 @@ router.get('/courses', coursesController)
 router.put('/save-course', saveCourseController)
 router.put('/put-course',newCourseValidation, putCourseController)
 
-router.delete('/course/:id')
+router.delete('/delete-course/:id', deleteCourseController)
 
 // router.get('/course-content/:id')
 // router.post('/add-course-content', addContentController)

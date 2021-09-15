@@ -54,4 +54,14 @@ module.exports = {
             }
         })
     },
+
+    deleteCourse: (id)=> {
+        return new Promise ((resolve, reject)=> {
+            db().collection(COURSE_COLLECTION).remove({course__code: id}).then((response)=> {
+                resolve(response)
+            }).catch((err)=> {
+                reject(err)
+            })
+        })
+    }
 }
