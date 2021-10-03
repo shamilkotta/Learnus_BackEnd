@@ -41,6 +41,7 @@ module.exports = {
         const match = {}
         if (id.length <= 5) {
             match.course__code = id
+            match.status = 'Active'
         }else {
             match._id = ObjectId(id)
         }
