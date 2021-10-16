@@ -108,6 +108,13 @@ module.exports = {
             },
             errorMessage: 'Course duration cannot be empty',
         },
+        course__noModules: {
+            trim: true,
+            notEmpty: {
+                options: { ignore_whitespace: true }
+            },
+            errorMessage: 'No of modules cannot be empty',
+        },
         course__language: {
             trim: true,
             isString: true,
@@ -119,18 +126,6 @@ module.exports = {
                 options: {max: 25}
             },
             errorMessage: 'Course language cannot be empty',
-        },
-        course__resources: {
-            trim: true,
-            isString: true,
-            notEmpty: {
-                options: { ignore_whitespace: true }
-            },
-            isLength: {
-                errorMessage: 'Course resources can only upto  28 characters long',
-                options: {max: 28}
-            },
-            errorMessage: 'Course resources cannot be empty',
         },
         course__benefits1: {
             trim: true,
@@ -147,7 +142,6 @@ module.exports = {
         course__benefits2: {
             trim: true,
             isString: true,
-            optional: true,
             notEmpty: {
                 options: { ignore_whitespace: true }
             },
@@ -160,7 +154,6 @@ module.exports = {
         course__benefits3: {
             trim: true,
             isString: true,
-            optional: true,
             notEmpty: {
                 options: { ignore_whitespace: true }
             },
@@ -173,7 +166,6 @@ module.exports = {
         course__benefits4: {
             trim: true,
             isString: true,
-            optional: true,
             notEmpty: {
                 options: { ignore_whitespace: true }
             },
@@ -183,6 +175,33 @@ module.exports = {
             },
             errorMessage: 'Course benefits cannot be empty',
         },
-        // course__coverImg: "shamil",
+        course__benefits5: {
+            trim: true,
+            isString: true,
+            notEmpty: {
+                options: { ignore_whitespace: true }
+            },
+            isLength: {
+                errorMessage: 'Course benefits can only upto 28 characters long',
+                options: {max: 28}
+            },
+            errorMessage: 'Course benefits cannot be empty',
+        },
+        course__coverImg: {
+            trim: true,
+            isString: true,
+            notEmpty: {
+                options: { ignore_whitespace: true }
+            },
+            errorMessage: 'Enter cover image url'
+        },
+        course__coverVideo: {
+            trim: true,
+            isString: true,
+            notEmpty: {
+                options: { ignore_whitespace: true }
+            },
+            errorMessage: 'Enter cover video url'
+        },
     }
 } 
